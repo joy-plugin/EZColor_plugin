@@ -1,13 +1,9 @@
-main : joy.hwan.plugin.EZColor.Main
-name : EZColor_plugin
-version : 1.0.0
+main: joy.hwan.plugin.EZColor.Main
+name: EZColor_plugin
+version: 1.0.0
 author: joy.hwan
-<<<<<<< Updated upstream
-description : EZColor
-=======
-description : A plug-in that allows you to adjust the color of your chat to your liking through the command ezcolor.
-commands : 
-   EZColor :
-      description : ezcolor
-      usage : /ezcolor [COLOR]
->>>>>>> Stashed changes
+description: A plug-in that allows you to adjust the color of your chat to your liking through the command ezcolor.
+commands:
+  EZColor:
+    description: ezcolor
+    usage: /ezcolor [COLOR]
