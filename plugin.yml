@@ -1,0 +1,5 @@
+main : joy.hwan.plugin.EZColor.Main
+name : EZColor
+version : 1.0.0
+author: joy.hwan
+description : EZColor
