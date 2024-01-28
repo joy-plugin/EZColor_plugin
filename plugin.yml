@@ -6,4 +6,4 @@ description : EZColor
 commands : 
    EZColor :
       description : ezcolor
-      usage : /ezcolor
+      usage : /ezcolor [COLOR]
