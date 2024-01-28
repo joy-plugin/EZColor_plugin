@@ -15,6 +15,9 @@ public class Main extends JavaPlugin implements Listener {
 	public void onEnable() {
 		// TODO Auto-generated method stub
 		super.onEnable();
+
+		getCommand("ezcolor").setExecutor(new EZColorCommand());
+
 	}
 
 }

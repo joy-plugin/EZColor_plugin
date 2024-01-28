@@ -3,3 +3,7 @@ name : EZColor
 version : 1.0.0
 author: joy.hwan
 description : EZColor
+commands : 
+   EZColor :
+      description : ezcolor
+      usage : /ezcolor
