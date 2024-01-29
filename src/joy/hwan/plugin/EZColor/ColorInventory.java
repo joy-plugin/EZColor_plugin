@@ -9,10 +9,8 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -20,18 +18,22 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class ColorInventory implements Listener {
 	private final Inventory inv;
 
-	Material[] woolMaterialList = new Material[] { Material.BLACK_WOOL, Material.BLUE_WOOL, Material.GRAY_WOOL,
-			Material.GREEN_WOOL, Material.RED_WOOL, Material.WHITE_WOOL, Material.YELLOW_WOOL };
+	private final Material[] woolMaterialList;
 
-	String[] woolColorList = new String[] { "BLACK", "BLUE", "GRAY", "GREEN", "RED", "WHITE", "YELLOW" };
+	private final String[] woolColorList;
+	private final Main main;
 
-	HashMap<String, Material> stringToWoolMap = new HashMap<String, Material>();
-	HashMap<Material, String> woolToStringMap = new HashMap<Material, String>();
-
-	final Main main;
+	private HashMap<String, Material> stringToWoolMap = new HashMap<String, Material>();
+	private HashMap<Material, String> woolToStringMap = new HashMap<Material, String>();
 
 	public ColorInventory(Main main) {
-		inv = Bukkit.createInventory(null, 9, "Example");
+		inv = Bukkit.createInventory(null, 9, "CHAT COLOR");
+
+		this.woolMaterialList = new Material[] { Material.BLACK_WOOL, Material.BLUE_WOOL, Material.GRAY_WOOL,
+				Material.GREEN_WOOL, Material.RED_WOOL, Material.WHITE_WOOL, Material.YELLOW_WOOL };
+
+		this.woolColorList = new String[] { "BLACK", "BLUE", "GRAY", "GREEN", "RED", "WHITE", "YELLOW" };
+
 		this.main = main;
 
 		initializeMap();
@@ -74,14 +76,8 @@ public class ColorInventory implements Listener {
 		ent.openInventory(inv);
 	}
 
-	@EventHandler
-	public void ballFiring(PlayerInteractEvent e) {
-		Player p = e.getPlayer();
-		if (!(e.getAction() == Action.RIGHT_CLICK_AIR))
-			return;
-		if (!(e.getItem().getType() == Material.STICK))
-			return;
-		openInventory(p);
+	public void closeInventory(final HumanEntity ent) {
+		ent.closeInventory();
 	}
 
 	// Check for clicks on items
@@ -102,14 +98,15 @@ public class ColorInventory implements Listener {
 		Material material = clickedItem.getType();
 
 		if (material == Material.BARRIER) {
-			player.closeInventory();
+			closeInventory(player);
 			return;
 		}
 
-		ChatColor chatColor = ChatColor.valueOf(woolToStringMap.get(material));
-		// Using slots click is a best option for your inventory click's
+		String color = woolToStringMap.get(material);
+		ChatColor chatColor = ChatColor.valueOf(color);
 
-		main.useChatColorMap.put(player.getUniqueId(), woolToStringMap.get(material));
+		player.sendMessage("플레이어의 채팅 색깔이 " + (chatColor + color) + ChatColor.RESET + " 로 변경됐습니다.");
+		main.useChatColorMap.put(player.getUniqueId(), color);
 	}
 
 	// Cancel dragging in our inventory

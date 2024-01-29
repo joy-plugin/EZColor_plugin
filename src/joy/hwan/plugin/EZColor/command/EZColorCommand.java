@@ -37,10 +37,6 @@ public class EZColorCommand implements CommandExecutor, TabExecutor {
 
 			try {
 				ChatColor chatColor = ChatColor.valueOf(color);
-
-				main.useChatColorMap.put(player.getUniqueId(), color);
-
-				return true;
 			} catch (NullPointerException error) {
 				error.printStackTrace();
 				return false;
@@ -48,6 +44,10 @@ public class EZColorCommand implements CommandExecutor, TabExecutor {
 				player.sendMessage(ChatColor.RED + "잘못된 컬러 입니다. 추천 리스트에 뜨는 컬러를 선택해 주세요.");
 				return false;
 			}
+
+			main.useChatColorMap.put(player.getUniqueId(), color);
+
+			return true;
 
 		}
 
