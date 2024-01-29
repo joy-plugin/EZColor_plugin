@@ -29,6 +29,7 @@ public class AsyncPlayerChat implements Listener {
 
 			if (chatColor != null) {
 				String message = event.getMessage();
+
 				event.setMessage(chatColor + message);
 			}
 		}
