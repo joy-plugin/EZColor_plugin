@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <jardesc>
-    <jar path="/Users/kakao/Desktop/plugins/plugins/EZColor.jar"/>
+    <jar path="/Users/gimdonghwan/Desktop/plugins/server/plugins/EZColor.jar"/>
     <options buildIfNeeded="true" compress="true" descriptionLocation="/EZColor/generate.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="false" overwrite="true" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
     <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
     <selectedProjects/>
@@ -11,8 +11,8 @@
         </sealing>
     </manifest>
     <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
-        <file path="/EZColor/.classpath"/>
         <file path="/EZColor/.project"/>
+        <file path="/EZColor/.classpath"/>
         <file path="/EZColor/plugin.yml"/>
         <javaElement handleIdentifier="=EZColor/src"/>
     </selectedElements>

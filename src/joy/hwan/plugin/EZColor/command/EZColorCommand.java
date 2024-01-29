@@ -10,19 +10,27 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 
+import joy.hwan.plugin.EZColor.ColorInventory;
 import joy.hwan.plugin.EZColor.Main;
 
 public class EZColorCommand implements CommandExecutor, TabExecutor {
 	private final Main main;
+	private final ColorInventory colorInventory;
 
-	public EZColorCommand(Main main) {
+	public EZColorCommand(Main main, ColorInventory colorInventory) {
 		// TODO Auto-generated constructor stub
 		this.main = main;
+		this.colorInventory = colorInventory;
 	}
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
 		Player player = (Player) sender;
+
+		if (args.length == 0) {
+			colorInventory.openInventory((Player) sender);
+			return true;
+		}
 
 		if (args.length == 1) {
 			String color = args[0];
@@ -52,6 +60,7 @@ public class EZColorCommand implements CommandExecutor, TabExecutor {
 		List<String> list = new ArrayList<>();
 
 		for (ChatColor chatColor : ChatColor.values()) {
+
 			list.add(chatColor.name());
 		}
 

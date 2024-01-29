@@ -1,9 +1,9 @@
 package joy.hwan.plugin.EZColor;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
@@ -20,14 +20,20 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class ColorInventory implements Listener {
 	private final Inventory inv;
 
-	HashMap<String, Material> woolMap = new HashMap<String, Material>();
+	Material[] woolMaterialList = new Material[] { Material.BLACK_WOOL, Material.BLUE_WOOL, Material.GRAY_WOOL,
+			Material.GREEN_WOOL, Material.RED_WOOL, Material.WHITE_WOOL, Material.YELLOW_WOOL };
 
-	public ColorInventory() {
-		// Create a new inventory, with no owner (as this isn't a real inventory), a
-		// size of nine, called example
-		inv = Bukkit.createInventory(null, 54, "Example");
+	String[] woolColorList = new String[] { "BLACK", "BLUE", "GRAY", "GREEN", "RED", "WHITE", "YELLOW" };
 
-		// Put the items into the inventory
+	HashMap<String, Material> stringToWoolMap = new HashMap<String, Material>();
+	HashMap<Material, String> woolToStringMap = new HashMap<Material, String>();
+
+	final Main main;
+
+	public ColorInventory(Main main) {
+		inv = Bukkit.createInventory(null, 9, "Example");
+		this.main = main;
+
 		initializeMap();
 
 		initializeItem();
@@ -35,31 +41,19 @@ public class ColorInventory implements Listener {
 
 	// You can call this whenever you want to put the items in
 	public void initializeMap() {
-		woolMap.put("BLACK", Material.BLACK_WOOL);
-		woolMap.put("BLUE", Material.BLUE_WOOL);
-		woolMap.put("BROWN", Material.BROWN_WOOL);
-		woolMap.put("CYAN", Material.CYAN_WOOL);
-		woolMap.put("GRAY", Material.GRAY_WOOL);
-		woolMap.put("GREEN", Material.GREEN_WOOL);
-		woolMap.put("LIGHT_BLUE", Material.LIGHT_BLUE_WOOL);
-		woolMap.put("LIGHT_GRAY", Material.LIGHT_GRAY_WOOL);
-		woolMap.put("LIME", Material.LIME_WOOL);
-		woolMap.put("MAGENTA", Material.MAGENTA_WOOL);
-		woolMap.put("ORANGE", Material.ORANGE_WOOL);
-		woolMap.put("PINK", Material.PINK_WOOL);
-		woolMap.put("PURPLE", Material.PURPLE_WOOL);
-		woolMap.put("RED", Material.RED_WOOL);
-		woolMap.put("WHITE", Material.WHITE_WOOL);
-		woolMap.put("YELLOW", Material.YELLOW_WOOL);
+		for (int index = 0; index < woolMaterialList.length; index++) {
+			stringToWoolMap.put(woolColorList[index], woolMaterialList[index]);
+			woolToStringMap.put(woolMaterialList[index], woolColorList[index]);
+		}
 	}
 
 	public void initializeItem() {
-		for (String color : woolMap.keySet()) {
-			Material material = woolMap.get(color);
+		for (String color : stringToWoolMap.keySet()) {
+			Material material = stringToWoolMap.get(color);
 
 			inv.addItem(createGuiItem(material, color));
 		}
-		inv.setItem(53, createGuiItem(Material.BARRIER, "CLOSE"));
+		inv.setItem(8, createGuiItem(Material.BARRIER, "CLOSE"));
 	}
 
 	// Nice little method to create a gui item with a custom name, and description
@@ -104,10 +98,18 @@ public class ColorInventory implements Listener {
 		if (clickedItem == null || clickedItem.getType().isAir())
 			return;
 
-		final Player p = (Player) e.getWhoClicked();
+		final Player player = (Player) e.getWhoClicked();
+		Material material = clickedItem.getType();
 
+		if (material == Material.BARRIER) {
+			player.closeInventory();
+			return;
+		}
+
+		ChatColor chatColor = ChatColor.valueOf(woolToStringMap.get(material));
 		// Using slots click is a best option for your inventory click's
-		p.sendMessage("You clicked at slot " + e.getRawSlot());
+
+		main.useChatColorMap.put(player.getUniqueId(), woolToStringMap.get(material));
 	}
 
 	// Cancel dragging in our inventory

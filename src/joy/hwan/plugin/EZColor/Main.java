@@ -21,6 +21,12 @@ public class Main extends JavaPlugin {
 
 	private final File file = new File(getDataFolder().getParentFile(), "/chatColor.txt");
 
+	final ColorInventory colorInventory;
+
+	public Main() {
+		this.colorInventory = new ColorInventory(this);
+	}
+
 	@Override
 	public void onLoad() {
 		super.onLoad();
@@ -49,11 +55,11 @@ public class Main extends JavaPlugin {
 
 	public void registerEvent() {
 		getServer().getPluginManager().registerEvents(new AsyncPlayerChat(this), this);
-		getServer().getPluginManager().registerEvents(new ColorInventory(), this);
+		getServer().getPluginManager().registerEvents(colorInventory, this);
 	}
 
 	public void registerCommand() {
-		getCommand("ezcolor").setExecutor(new EZColorCommand(this));
+		getCommand("ezcolor").setExecutor(new EZColorCommand(this, colorInventory));
 	}
 
 	public void makeFile() {
