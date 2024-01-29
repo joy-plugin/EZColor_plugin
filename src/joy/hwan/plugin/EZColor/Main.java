@@ -49,6 +49,7 @@ public class Main extends JavaPlugin {
 
 	public void registerEvent() {
 		getServer().getPluginManager().registerEvents(new AsyncPlayerChat(this), this);
+		getServer().getPluginManager().registerEvents(new ColorInventory(), this);
 	}
 
 	public void registerCommand() {

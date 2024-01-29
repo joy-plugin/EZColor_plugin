@@ -3,6 +3,7 @@ name: EZColor_plugin
 version: 1.0.0
 author: joy.hwan
 description: A plug-in that allows you to adjust the color of your chat to your liking through the command ezcolor.
+api-version: "1.14"
 commands:
   EZColor:
     description: ezcolor
